@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" >
+  <form [formGroup]="staffForm">
+    <div class="form-group">
+        <label>First Name</label>
+        <input class="form-control" formControlName="firstName" placeholder="Enter firstName" required>
+    </div>
+    <div class="form-group">
+        <label>Last Name</label>
+        <input class="form-control" formControlName="lastName" placeholder="Enter lastName" required>
+    </div>
+    <div class="form-group">
+        <label>Group</label>
+        <select class="form-control" id="group" formControlName="group" placeholder="Enter group" required>
+            <option *ngFor="let group of groups" [value]="group">{{group}}</option>
+        </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(getNewStaff())">Save</button>
+</div>

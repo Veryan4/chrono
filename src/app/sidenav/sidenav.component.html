@@ -1,0 +1,4 @@
+<div class="sidenav">
+    <h1 [ngClass]="{'selected': scheduleIsView}" (click)="switchView('schedule')">Schedule</h1>
+    <h1 [ngClass]="{'selected': staffIsView}" (click)="switchView('staff')">Staff <span *ngIf="staffCount > 0" class="badge">+ {{staffCount}}</span></h1>
+</div>

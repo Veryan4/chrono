@@ -1,0 +1,4 @@
+.table-wrap {
+    max-height: 320px;
+    overflow-y: scroll;
+}

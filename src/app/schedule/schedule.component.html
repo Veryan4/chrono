@@ -1,0 +1,14 @@
+<div class="page">
+    <sidenav></sidenav>
+    <div class ="container">
+        <div class="wrap">
+            <p>Simple datepicker</p>
+            <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date=$event.next"></ngb-datepicker>
+            <hr/>
+            <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">Select Today</button>
+            <button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo()">To current month</button>
+            <button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo({year: 2020, month: 4})">To Apr 2020</button>
+        </div>
+    </div>
+</div>
+

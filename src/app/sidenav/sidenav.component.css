@@ -1,0 +1,19 @@
+.selected{
+    color:white;
+    background-color: #2E3F57;
+}
+h1 {
+    cursor: pointer;
+    padding: 20px 40px;
+}
+.sidenav{
+    background-color: #e8eaed;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.badge{
+    background-color: #0076de;
+    /* rest of style is global */
+}
