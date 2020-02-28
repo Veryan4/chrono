@@ -4,6 +4,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ScheduleComponent } from './schedule.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
+import { StaffService } from '../shared/services/staff.service';
+import { HttpClientTestingModule } from  '@angular/common/http/testing';
 
 describe('ScheduleComponent', () => {
   let component: ScheduleComponent;
@@ -18,7 +20,11 @@ describe('ScheduleComponent', () => {
       imports:[
         RouterTestingModule,
         FormsModule,
-        NgbModule
+        NgbModule,
+        HttpClientTestingModule
+      ],
+      providers:[
+        StaffService
       ]
     })
     .compileComponents();

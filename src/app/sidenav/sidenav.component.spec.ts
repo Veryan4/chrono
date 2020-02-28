@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { SidenavComponent } from './sidenav.component';
+import { StaffService } from '../shared/services/staff.service';
+import { HttpClientTestingModule } from  '@angular/common/http/testing';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -10,7 +12,11 @@ describe('SidenavComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SidenavComponent ],
+      imports:[
+        HttpClientTestingModule
+      ],
       providers: [
+        StaffService,
         {
           provide: Router,
           useClass: class { 

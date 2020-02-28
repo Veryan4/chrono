@@ -62,7 +62,7 @@ describe('StaffModalComponent', () => {
   }));
   it('should return null if form invalid', fakeAsync(() => {
     updateForm(invalidForm.firstName, invalidForm.lastName, invalidForm.group);
-    let result = component.getNewStaff();
+    let result = component.onClose();
     expect(result).toEqual(null);
   }))
 

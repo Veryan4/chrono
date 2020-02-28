@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormGroup, FormBuilder, Validators, AbstractControlOptions } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Staff } from '../../shared/types/staff.type';
 
 
@@ -84,9 +84,8 @@ export class StaffModalComponent implements OnInit {
   }
 
   getValidationErrors(key) : string | void {
-    if(this.staffForm.errors && this.staffForm.errors.length > 0){
-      console.log(this.staffForm.errors[key])
-    return this.staffForm.errors[key];
+    if(this.staffForm.errors && this.staffForm.errors.length > 0) {
+      return this.staffForm.errors[key];
     }
   }
 

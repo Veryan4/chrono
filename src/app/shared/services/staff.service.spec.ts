@@ -1,12 +1,9 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from  '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
 import { StaffService } from './staff.service';
 
 describe('StaffService', () => {
   let service: StaffService;
-  let http: HttpClient;
-  let injector: TestBed;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
