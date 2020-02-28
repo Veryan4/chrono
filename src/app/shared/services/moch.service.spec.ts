@@ -14,11 +14,13 @@ describe('MochService', () => {
       imports:[
         HttpClientTestingModule
       ],
+      providers: [ 
+        MochService 
+      ]
     })
     .compileComponents();
-    injector = getTestBed();
-    httpMock = injector.get(HttpTestingController);
-    service = new MochService(http);
+    service = TestBed.get(MochService);
+    httpMock = TestBed.get(HttpTestingController);
   });
 
   afterEach(() => {
@@ -45,7 +47,7 @@ describe('MochService', () => {
         expect(staffList.length).toBe(2);
         expect(staffList).toEqual(someStaff);
       });
-      const req = httpMock.expectOne(`${service.baseUrl}/api/doctors`);
+      const req = httpMock.expectOne(`${service.baseUrl}api/doctors`);
       expect(req.request.method).toBe("GET");
       req.flush(someStaff);
       httpMock.verify();

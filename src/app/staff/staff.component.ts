@@ -1,6 +1,5 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { DecimalPipe } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -13,23 +12,21 @@ import StaffJson  from '../../assets/Staff.json';
 @Component({
   selector: 'app-staff',
   templateUrl: './staff.component.html',
-  styleUrls: ['./staff.component.css'],
-  providers: [DecimalPipe]
+  styleUrls: ['./staff.component.css']
 })
 export class StaffComponent implements OnInit {
 
   staffList: Staff[] = StaffJson;
-  staffSubscription: Observable<Staff[]> ;
+  staffObs: Observable<Staff[]> ;
   filter = new FormControl('');
-  closeResult:string;
+  closeResult: string;
   
   constructor(
     private modalService: NgbModal,
-    private pipe: DecimalPipe,
     private mochService: MochService) { 
-      this.staffSubscription = this.filter.valueChanges.pipe(
+      this.staffObs = this.filter.valueChanges.pipe(
         startWith(''),
-        map(text => this.search(text, pipe))
+        map(text => this.search(text))
       );
     }
 
@@ -38,10 +35,10 @@ export class StaffComponent implements OnInit {
   }
 
   // Search also works on Ids, even if not displayed
-  search(text: string, pipe: PipeTransform): Staff[] {
+  search(text: string): Staff[] {
     return this.staffList.filter(staff => {
       const term = text.toLowerCase();
-      return pipe.transform(staff.id).includes(term)
+      return staff.id.toString().includes(term)
           || staff.firstName.toLowerCase().includes(term)
           || staff.lastName.toLowerCase().includes(term)
           || staff.group.toLowerCase().includes(term)

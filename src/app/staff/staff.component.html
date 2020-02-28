@@ -23,7 +23,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let staff of staffSubscription | async; index as i">
+                <tr *ngFor="let staff of staffObs | async; index as i">
                   <td><ngb-highlight [result]="staff.firstName + ' ' + staff.lastName" [term]="filter.value"></ngb-highlight></td>
                   <td><ngb-highlight [result]="staff.group" [term]="filter.value"></ngb-highlight></td>
                 </tr>

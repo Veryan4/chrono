@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Staff } from '../types/staff.type';
 
@@ -18,9 +17,8 @@ export class MochService {
 
   public mochGet(): Observable<Staff[]> {
     return Observable.create(observer => {
-      this.http.get(this.baseUrl + "/api/doctors", {headers: this.headers}).pipe(
-        debounceTime(5000),
-      ).subscribe((data : any) => {
+      this.http.get(this.baseUrl + "api/doctors", {headers: this.headers}).pipe()
+      .subscribe((data : any) => {
           observer.next(data);
           observer.complete();
       },(error : any) => console.log('error', error))

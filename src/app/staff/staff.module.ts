@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StaffComponent } from './staff.component';
 import { StaffModalComponent } from './staff-modal/staff-modal.component';
 import { SharedModule } from '../shared.module';

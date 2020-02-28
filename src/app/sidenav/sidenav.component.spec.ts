@@ -36,7 +36,7 @@ describe('SidenavComponent', () => {
     let router = fixture.debugElement.injector.get(Router);
     routes.forEach( route => {
       component.switchView(route);
-      expect(router.navigate).toHaveBeenCalledWith(["/"+route]);
+      expect(router.navigate).toHaveBeenCalledWith([route]);
     });
   });
   
