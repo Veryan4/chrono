@@ -5,7 +5,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { StaffModalComponent } from './staff-modal/staff-modal.component'
-import { Staff } from '../types/staff.type';
+import { MochService } from '../shared/services/moch.service';
+import { Staff } from '../shared/types/staff.type';
 import StaffJson  from '../../assets/Staff.json';
 
 
@@ -20,10 +21,12 @@ export class StaffComponent implements OnInit {
   staffList: Staff[] = StaffJson;
   staffSubscription: Observable<Staff[]> ;
   filter = new FormControl('');
+  closeResult:string;
   
   constructor(
     private modalService: NgbModal,
-    private pipe: DecimalPipe) { 
+    private pipe: DecimalPipe,
+    private mochService: MochService) { 
       this.staffSubscription = this.filter.valueChanges.pipe(
         startWith(''),
         map(text => this.search(text, pipe))
@@ -31,6 +34,7 @@ export class StaffComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.fakeHttpGet();
   }
 
   // Search also works on Ids, even if not displayed
@@ -54,11 +58,10 @@ export class StaffComponent implements OnInit {
         this.filter.setValue('');
       }
     }, (reason) => {
-      console.log(`Dismissed ${this.getDismissReason(reason)}`);
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 
-  // Left here for debugging purposes, should be removed for production
   getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -67,6 +70,16 @@ export class StaffComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
+  }
+
+  fakeHttpGet() {
+    this.mochService.mochGet().subscribe(staffToAdd => {
+      staffToAdd.forEach(staff =>{
+        //This is simply a moch, so there's no data to push
+        //Unit Test handled in MochService
+        //this.staffList.push(staff);
+      });
+    })
   }
 
 }
