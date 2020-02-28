@@ -7,7 +7,7 @@ J'ai fais 14 unit tests, je sais pas si c'est trop ou pas assez. Laissez moi des
 
 ```
 docker pull veryan4/chrono
-docker run -p 80:80 veryan4/wizard 
+docker run -p 80:80 veryan4/chrono
 ```
 
 
