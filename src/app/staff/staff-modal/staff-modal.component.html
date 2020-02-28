@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title">Add Staff</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -10,9 +10,17 @@
         <label>First Name</label>
         <input class="form-control" formControlName="firstName" placeholder="Enter firstName" required>
     </div>
+    <div *ngIf="firstNameControl.value != '' && getValidationErrors('invalidFirstName')"
+        class="warning">
+        {{getValidationErrors('invalidFirstName')}}
+    </div>
     <div class="form-group">
         <label>Last Name</label>
         <input class="form-control" formControlName="lastName" placeholder="Enter lastName" required>
+    </div>
+    <div *ngIf="lastNameControl.value != '' && getValidationErrors('invalidLastName')"
+        class="warning">
+        {{getValidationErrors('invalidLastName')}}
     </div>
     <div class="form-group">
         <label>Group</label>
@@ -23,5 +31,5 @@
   </form>
 </div>
 <div class="modal-footer">
-    <button type="button" id="save" class="btn btn-outline-dark" (click)="activeModal.close(getNewStaff())">Save</button>
+    <button type="button" id="save" class="btn btn-outline-dark" [disabled]="!staffForm.valid" (click)="onClose()">Save</button>
 </div>

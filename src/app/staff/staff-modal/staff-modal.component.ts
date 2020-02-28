@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators, AbstractControlOptions } from '@angular/forms';
 import { Staff } from '../../shared/types/staff.type';
 
 
@@ -26,7 +26,6 @@ export class StaffModalComponent implements OnInit {
     this.createForm();
   }
 
-  //Form builder will gives more validation control on the Input, less simple but safer long term.
   createForm() {
     this.staffForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
@@ -39,9 +38,10 @@ export class StaffModalComponent implements OnInit {
     this.firstNameControl = this.staffForm.controls['firstName'];
     this.lastNameControl = this.staffForm.controls['lastName'];
     this.groupControl = this.staffForm.controls['group'];
+    this.groupControl.setValue(this.groups[0]);
   }
 
-  staffValidator(firstNameKey:string, lastNameKey:string, groupKey:string) {
+  staffValidator(firstNameKey:string, lastNameKey:string, groupKey:string) : Object  {
     return (group: FormGroup): {[key: string]: any} => {
       let specialChar = /[ `!@#$%^&*()_+=\[\]{};:"\\|,.<>\/?~]/;
       let hasNumber = /\d/
@@ -50,27 +50,23 @@ export class StaffModalComponent implements OnInit {
       let staffGroup = group.controls[groupKey];
       if (specialChar.test(firstName.value) || hasNumber.test(firstName.value)) {
         return {
-          invalidFirstName: true
+          invalidFirstName: "Name can not contain numbers or special characters"
         }
       }
       if (specialChar.test(lastName.value) || hasNumber.test(lastName.value)) {
         return {
-          invalidLastName: true
+          invalidLastName: "Name can not contain numbers or special characters"
         };
       }
       if (!this.groups.includes(staffGroup.value)) {
         return {
-          groupNotFound: true
+          groupNotFound: "A group must be selected"
         };
       }
     }
   }
-
-  getNewStaff(): Staff | void {
-    if(!this.staffForm.valid) {
-      this.getFormValidationErrors();
-      return null;
-    }
+  
+  getNewStaff(): Staff {
     let staff: Staff = {
       id: 0,
       firstName: this.firstNameControl.value,
@@ -80,16 +76,18 @@ export class StaffModalComponent implements OnInit {
     return staff;
   }
 
-  // Left here for debugging purposes, should be remove for production
-  getFormValidationErrors() {
-    Object.keys(this.staffForm.controls).forEach(key => {
-      const controlErrors: ValidationErrors = this.staffForm.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach(keyError => {
-          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-        });
-      }
-    });
+  onClose() : Staff | void {
+    if(!this.staffForm.valid) {
+      return null;
+    }
+    this.activeModal.close(this.getNewStaff());
+  }
+
+  getValidationErrors(key) : string | void {
+    if(this.staffForm.errors && this.staffForm.errors.length > 0){
+      console.log(this.staffForm.errors[key])
+    return this.staffForm.errors[key];
+    }
   }
 
 }
