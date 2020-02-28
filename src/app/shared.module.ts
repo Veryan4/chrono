@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { MochService } from './shared/services/moch.service';
+import { StaffService } from './shared/services/staff.service';
+
 
 @NgModule({
   imports: [
+    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    RouterModule,
-    AppRoutingModule
+    NgbModule,
+    RouterModule
   ],
   declarations: [
     SidenavComponent
@@ -20,7 +23,7 @@ import { MochService } from './shared/services/moch.service';
     SidenavComponent
   ],
   providers: [
-    MochService
+    StaffService
   ]
 })
 export class SharedModule {}

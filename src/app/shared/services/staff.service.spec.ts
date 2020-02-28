@@ -1,10 +1,10 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from  '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
-import { MochService } from './moch.service';
+import { StaffService } from './staff.service';
 
-describe('MochService', () => {
-  let service: MochService;
+describe('StaffService', () => {
+  let service: StaffService;
   let http: HttpClient;
   let injector: TestBed;
   let httpMock: HttpTestingController;
@@ -15,11 +15,11 @@ describe('MochService', () => {
         HttpClientTestingModule
       ],
       providers: [ 
-        MochService 
+        StaffService 
       ]
     })
     .compileComponents();
-    service = TestBed.get(MochService);
+    service = TestBed.get(StaffService);
     httpMock = TestBed.get(HttpTestingController);
   });
 
@@ -27,7 +27,7 @@ describe('MochService', () => {
     httpMock.verify();
   });
 
-  describe('mochGet', () => {
+  describe('fakeGet', () => {
     it('should return an Observable<Staff[]>', () => {
       const someStaff = [
         { 
@@ -43,7 +43,7 @@ describe('MochService', () => {
           group: 'nurse'
         },
       ];
-      service.mochGet().subscribe((staffList) => {
+      service.fakeGet().subscribe((staffList) => {
         expect(staffList.length).toBe(2);
         expect(staffList).toEqual(someStaff);
       });
@@ -51,6 +51,15 @@ describe('MochService', () => {
       expect(req.request.method).toBe("GET");
       req.flush(someStaff);
       httpMock.verify();
+    });
+  });
+
+  describe('changeStaffCount', () => {
+    it('should update the BehaviorSubject value', () => {
+      service.changeStaffCount(10)
+      service.currentStaffCount.subscribe((count) => {
+        expect(count).toBe(10);
+      });
     });
   });
   

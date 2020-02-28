@@ -8,7 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { StaffComponent } from './staff.component';
 import { StaffModalComponent } from './staff-modal/staff-modal.component';
-import { MochService } from '../shared/services/moch.service';
+import { StaffService } from '../shared/services/staff.service';
 
 
 describe('StaffComponent', () => {
@@ -34,7 +34,7 @@ describe('StaffComponent', () => {
       ],
       providers:[
         FormControl,
-        MochService
+        StaffService
       ]
     })
     .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [StaffModalComponent] }})

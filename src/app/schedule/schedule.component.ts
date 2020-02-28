@@ -17,7 +17,7 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectToday() {
+  selectToday() : void {
     this.model = this.calendar.getToday();
   }
 

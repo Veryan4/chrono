@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StaffService } from '../shared/services/staff.service';
 
 @Component({
   selector: 'sidenav',
@@ -7,21 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-  @Input() staffCount: number = 0;
 
+  staffCount:number = 0;
   scheduleIsView: boolean = true;
   staffIsView: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    public staffService: StaffService) {
     this.scheduleIsView = this.router.url === '/schedule';
     this.staffIsView = this.router.url === '/staff';
    }
 
   ngOnInit() {
-    
+    this.staffService.currentStaffCount.subscribe(count => this.staffCount = count);
   }
 
-  switchView(link:string){
+  switchView(link:string) : void {
     this.router.navigate([link])
   }
 

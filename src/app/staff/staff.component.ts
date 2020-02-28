@@ -4,7 +4,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { StaffModalComponent } from './staff-modal/staff-modal.component'
-import { MochService } from '../shared/services/moch.service';
+import { StaffService } from '../shared/services/staff.service';
 import { Staff } from '../shared/types/staff.type';
 import StaffJson  from '../../assets/Staff.json';
 
@@ -23,7 +23,7 @@ export class StaffComponent implements OnInit {
   
   constructor(
     private modalService: NgbModal,
-    private mochService: MochService) { 
+    private staffService: StaffService) { 
       this.staffObs = this.filter.valueChanges.pipe(
         startWith(''),
         map(text => this.search(text))
@@ -45,7 +45,7 @@ export class StaffComponent implements OnInit {
     });
   }
 
-  openModal() {
+  openModal() : void {
     this.modalService.open(StaffModalComponent, {ariaLabelledBy: 'staff-modal'}).result.then((staff) => {
       if(staff){
         let latestId = Math.max.apply(Math, this.staffList.map(function(obj) { return obj.id; }))
@@ -53,10 +53,21 @@ export class StaffComponent implements OnInit {
         this.staffList.push(staff);
         //prevents Users from getting confused if staff missing after Modal Add.
         this.filter.setValue('');
+        this.staffService.changeStaffCount(this.staffList.length);
       }
     }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  fakeHttpGet() : void {
+    this.staffService.fakeGet().subscribe(staffToAdd => {
+      staffToAdd.forEach(staff =>{
+        //This is simply a moch, so there's no data to push
+        //Unit Test handled in StaffService
+        //this.staffList.push(staff);
+      });
+    })
   }
 
   getDismissReason(reason: any): string {
@@ -67,16 +78,6 @@ export class StaffComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
-  }
-
-  fakeHttpGet() {
-    this.mochService.mochGet().subscribe(staffToAdd => {
-      staffToAdd.forEach(staff =>{
-        //This is simply a moch, so there's no data to push
-        //Unit Test handled in MochService
-        //this.staffList.push(staff);
-      });
-    })
   }
 
 }
